@@ -5,6 +5,7 @@ const Profile = () => {
   const user = useSelector((state) => state.auth);
 
   return (
+    user &&
     user.isLogin && (
       <ProfileWrapper to="/profile">
         <UserAvatar src={user.avatar} alt="user-avatar" />

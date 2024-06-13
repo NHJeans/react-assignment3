@@ -7,7 +7,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-  padding: 40px;
+  padding: 20px 40px;
 `;
 
 export const Label = styled.label`
@@ -30,7 +30,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   padding: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 16px;
   font-weight: bold;
   border: none;
@@ -38,9 +38,9 @@ export const Button = styled.button`
   background-color: #7AB2B2;
   color: #fff;
   cursor: pointer;
-
+  transition: background-color 0.3s;
   &:hover {
-    background-color: #4D869C;
+    background-color: #5f8a8a;
   }
 `;
 

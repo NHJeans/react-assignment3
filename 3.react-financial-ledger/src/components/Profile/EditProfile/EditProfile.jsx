@@ -7,7 +7,6 @@ const EditProfile = () => {
   const [nickname, setNickname] = useState("");
   const [avatar, setAvatar] = useState(null);
   const navigate = useNavigate();
-
   const handleUpdateProfile = async () => {
     const formData = new FormData();
     formData.append("nickname", nickname);

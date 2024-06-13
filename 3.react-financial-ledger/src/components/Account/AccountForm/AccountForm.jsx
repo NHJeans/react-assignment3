@@ -1,41 +1,47 @@
 import { Form, Label, Input, Button, FormContainer } from "./style";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  addExpense,
-  setDate,
-  setItem,
-  setAmount,
-  setDescription,
-} from "../../../redux/slices/expensesSlice";
+import { useSelector } from "react-redux";
+import { postExpense } from "../../../apis/expense";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AccountForm = () => {
-  const date = useSelector((state) => state.expenses.date);
-  const item = useSelector((state) => state.expenses.item);
-  const amount = useSelector((state) => state.expenses.amount);
-  const description = useSelector((state) => state.expenses.description);
-  const dispatch = useDispatch();
+  const [date, setDate] = useState("");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const user = useSelector((state) => state.auth.user);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const handleChange = (setter) => (e) => {
-    dispatch(setter(e.target.value));
-  };
+  const mutation = useMutation({
+    mutationFn: postExpense,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["expenses"]);
+      navigate(0);
+    },
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (!date || !item || !amount || !description) {
       return alert("모든 항목을 입력해주세요.");
     }
+
     const newExpense = {
       id: crypto.randomUUID(),
+      month: parseInt(date.split("-")[1], 10),
       date,
       item,
       amount: parseInt(amount, 10),
       description,
+      createdBy: user,
     };
-    dispatch(addExpense(newExpense));
-    dispatch(setDate(""));
-    dispatch(setItem(""));
-    dispatch(setAmount(""));
-    dispatch(setDescription(""));
+    mutation.mutate(newExpense);
+    setDate("");
+    setItem("");
+    setAmount("");
+    setDescription("");
   };
 
   return (
@@ -46,7 +52,7 @@ const AccountForm = () => {
           type="date"
           value={date}
           required
-          onChange={handleChange(setDate)}
+          onChange={(e) => setDate(e.target.value)}
         />
         <Label>항목</Label>
         <Input
@@ -54,7 +60,7 @@ const AccountForm = () => {
           value={item}
           placeholder="지출 항목"
           required
-          onChange={handleChange(setItem)}
+          onChange={(e) => setItem(e.target.value)}
         />
         <Label>금액</Label>
         <Input
@@ -62,7 +68,7 @@ const AccountForm = () => {
           value={amount}
           placeholder="지출 금액"
           required
-          onChange={handleChange(setAmount)}
+          onChange={(e) => setAmount(e.target.value)}
         />
         <Label>지출 내용</Label>
         <Input
@@ -70,7 +76,7 @@ const AccountForm = () => {
           value={description}
           placeholder="지출 내용"
           required
-          onChange={handleChange(setDescription)}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <Button type="submit">저장</Button>
       </Form>

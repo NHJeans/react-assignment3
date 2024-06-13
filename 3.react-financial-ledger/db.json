@@ -1,15 +1,6 @@
 {
   "expenses": [
     {
-      "id": "46869445-5f9c-4650-941f-41bd9457bc07",
-      "month": 1,
-      "date": "2024-01-03",
-      "item": "개인사업",
-      "amount": 1000000,
-      "description": "테슬라 모델 3",
-      "createdBy": "Musk"
-    },
-    {
       "id": "a5c0d8de-d010-4d07-9934-29765051a7ea",
       "month": 1,
       "date": "2024-01-07",
@@ -62,6 +53,144 @@
       "amount": 100000,
       "description": "세광양대창",
       "createdBy": "Me"
+    },
+    {
+      "id": "4c5e6f36-8353-4g1e-9c8f-8f55e84e3e46",
+      "month": 2,
+      "date": "2024-02-25",
+      "item": "쇼핑",
+      "amount": 50000,
+      "description": "새 옷 구매",
+      "createdBy": "Alex"
+    },
+    {
+      "id": "5d6f7g47-8464-4h2e-9d9g-9f66f95f4f57",
+      "month": 3,
+      "date": "2024-03-04",
+      "item": "개인사업",
+      "amount": 700000,
+      "description": "사무실 임대료",
+      "createdBy": "Bob"
+    },
+    {
+      "id": "6e7g8h58-8575-4i3e-9e8h-1f77g06g5g68",
+      "month": 3,
+      "date": "2024-03-14",
+      "item": "식비",
+      "amount": 25000,
+      "description": "맥도날드",
+      "createdBy": "Bob"
+    },
+    {
+      "id": "7f8h9i69-8686-4j4e-9j9i-2f88h17h6h79",
+      "month": 3,
+      "date": "2024-03-24",
+      "item": "도서",
+      "amount": 45000,
+      "description": "Python 프로그래밍",
+      "createdBy": "Bob"
+    },
+    {
+      "date": "2024-04-03",
+      "item": "여행",
+      "amount": 1200000,
+      "description": "부산 여행",
+      "id": "8g9i0j70-8797-4k5e-9k0j-3f99i28i7i80"
+    },
+    {
+      "id": "9h0j1k81-8898-4l6e-9l1k-4g00j39j8j91",
+      "month": 4,
+      "date": "2024-04-13",
+      "item": "식비",
+      "amount": 30000,
+      "description": "치킨",
+      "createdBy": "Cathy"
+    },
+    {
+      "id": "0j1k2l92-8999-4m7e-9m2k-5h11k40k9k02",
+      "month": 4,
+      "date": "2024-04-23",
+      "item": "쇼핑",
+      "amount": 60000,
+      "description": "전자제품",
+      "createdBy": "Cathy"
+    },
+    {
+      "date": "2024-05-05",
+      "item": "식비",
+      "amount": 15000,
+      "description": "롯데리아",
+      "id": "1k2l3m03-9100-4n8e-9n3k-6i22l51l0l13"
+    },
+    {
+      "id": "2l3m4n14-9211-4o9e-9o4k-7j33m62m1m24",
+      "month": 5,
+      "date": "2024-05-15",
+      "item": "여행",
+      "amount": 350000,
+      "description": "경주 여행",
+      "createdBy": "Dave"
+    },
+    {
+      "id": "3m4n5o25-9322-5p0e-9p5k-8k44n73n2n35",
+      "month": 5,
+      "date": "2024-05-25",
+      "item": "쇼핑",
+      "amount": 80000,
+      "description": "가전제품",
+      "createdBy": "Dave"
+    },
+    {
+      "id": "4n5o6p36-9433-5q1e-9q6k-9l55o84o3o46",
+      "month": 6,
+      "date": "2024-06-06",
+      "item": "식비",
+      "amount": 18000,
+      "description": "던킨 도너츠",
+      "createdBy": "Eva"
+    },
+    {
+      "id": "5o6p7q47-9544-5r2e-9r7k-0m66p95p4p57",
+      "month": 6,
+      "date": "2024-06-16",
+      "item": "여행",
+      "amount": 400000,
+      "description": "서울 여행",
+      "createdBy": "Eva"
+    },
+    {
+      "id": "6p7q8r58-9655-5s3e-9s8k-1n77q06q5q68",
+      "month": 6,
+      "date": "2024-06-26",
+      "item": "도서",
+      "amount": 35000,
+      "description": "JavaScript 마스터",
+      "createdBy": "nam"
+    },
+    {
+      "id": "20fcf375-b54b-4196-be74-6a5f7db7d596",
+      "month": 1,
+      "date": "2024-01-01",
+      "item": "떡국",
+      "amount": 50000,
+      "description": "떡국사기",
+      "createdBy": "qwer1111"
+    },
+    {
+      "id": "ccef76af-1a9e-47da-a63e-1acda9b2f5dc",
+      "month": 2,
+      "date": "2024-02-20",
+      "item": "하이볼",
+      "amount": 30000,
+      "description": "하이볼",
+      "createdBy": "qwer1111"
+    },
+    {
+      "date": "2024-12-25",
+      "item": "선물",
+      "amount": 300000000,
+      "description": "크리스마스선물",
+      "id": "e8b4cf51-da71-44dd-94ef-7bb2d9e10e94"
     }
   ]
 }

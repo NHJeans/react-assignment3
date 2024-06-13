@@ -7,7 +7,7 @@ export const authApi = axios.create({
 });
 
 export const jsonApi = axios.create({
-  baseURL: import.meta.env.VITE_API_JSON_URL || 'http://localhost:5000',
+  baseURL: import.meta.env.VITE_API_JSON_URL || 'http://localhost:4000',
 });
 
 

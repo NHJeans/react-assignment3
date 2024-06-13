@@ -6,8 +6,8 @@ const initialState = {
   avatar: null,
   nickname: null,
   userId: null,
-
 };
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -26,9 +26,15 @@ const authSlice = createSlice({
       state.avatar = null;
       state.nickname = null;
       state.userId = null;
+      localStorage.clear();
+    },
+    updateProfile: (state, action) => {
+      const { avatar, nickname } = action.payload;
+      state.avatar = avatar;
+      state.nickname = nickname;
     },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, updateProfile } = authSlice.actions;
 export default authSlice.reducer;

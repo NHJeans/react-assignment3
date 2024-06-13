@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../../apis/auth";
 import AccountForm from "../../components/Account/AccountForm";
@@ -12,14 +12,13 @@ import { login, logout } from "../../redux/slices/authSlice";
 const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const res = await getUserInfo();
-        if (res) {
-          dispatch(login(res));
+        const userInfo = await getUserInfo();
+        if (userInfo && userInfo.success) {
+          dispatch(login(userInfo));
         } else {
           dispatch(logout());
           localStorage.clear();
@@ -31,9 +30,7 @@ const HomePage = () => {
     };
 
     fetchUserInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
-  console.log("현재 로그인된 유저 정보1:", user);
+  }, [dispatch, navigate]);
 
   return (
     <>

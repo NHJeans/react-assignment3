@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  deleteExpense,
-  updateExpense,
-  setDate,
-  setItem,
-  setAmount,
-  setDescription,
-} from "../../redux/slices/expensesSlice";
 import {
   Button,
   ButtonContainer,
@@ -17,108 +8,113 @@ import {
   DetailItem,
   Input,
   Label,
-  NoData,
 } from "./style";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getExpense, putExpense, deleteExpense } from "../../apis/expense";
 
 const DetailPage = () => {
   const { id } = useParams();
-  const expenses = useSelector((state) => state.expenses.expenses);
-  const date = useSelector((state) => state.expenses.date);
-  const item = useSelector((state) => state.expenses.item);
-  const amount = useSelector((state) => state.expenses.amount);
-  const description = useSelector((state) => state.expenses.description);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [foundExpense, setFoundExpense] = useState(null);
+  const queryClient = useQueryClient();
+
+  const { data: selectedExpense } = useQuery({
+    queryKey: ["expenses", id],
+    queryFn: getExpense,
+  });
+  const [date, setDate] = useState("");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
-    const expense = expenses.find((item) => item.id === id);
-    if (expense) {
-      dispatch(setDate(expense.date));
-      dispatch(setItem(expense.item));
-      dispatch(setAmount(expense.amount));
-      dispatch(setDescription(expense.description));
-      setFoundExpense(expense);
-    } else {
-      setFoundExpense(null);
+    if (selectedExpense) {
+      setDate(selectedExpense.date);
+      setItem(selectedExpense.item);
+      setAmount(selectedExpense.amount);
+      setDescription(selectedExpense.description);
     }
-  }, [dispatch, expenses, id]);
+  }, [selectedExpense]);
 
-  const handleDelete = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      dispatch(deleteExpense(id));
-      dispatch(setDate(""));
-      dispatch(setItem(""));
-      dispatch(setAmount(""));
-      dispatch(setDescription(""));
+  const mutationEdit = useMutation({
+    mutationFn: putExpense,
+    onSuccess: () => {
       navigate("/");
-    }
-  };
+      queryClient.invalidateQueries(["expenses"]);
+    },
+  });
 
-  const handleUpdate = () => {
-    const updatedExpense = {
+  const mutationDelete = useMutation({
+    mutationFn: deleteExpense,
+    onSuccess: () => {
+      navigate("/");
+    },
+  });
+
+  const editExpense = () => {
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    if (!datePattern.test(date)) {
+      alert("날짜를 YYYY-MM-DD 형식으로 입력해주세요.");
+      return;
+    }
+    if (!item || amount <= 0) {
+      alert("유효한 항목과 금액을 입력해주세요.");
+      return;
+    }
+    const newExpenses = {
       id,
       date,
       item,
-      amount: parseInt(amount, 10),
+      amount: Number(amount),
       description,
     };
-    dispatch(updateExpense(updatedExpense));
-    dispatch(setDate(""));
-    dispatch(setItem(""));
-    dispatch(setAmount(""));
-    dispatch(setDescription(""));
-    navigate("/");
+    mutationEdit.mutate(newExpenses);
+  };
+
+  const handleDelete = () => {
+    mutationDelete.mutate(id);
   };
 
   return (
     <Container>
-      {foundExpense ? (
-        <Detail>
-          <DetailItem>
-            <Label>날짜:</Label>
-            <Input
-              type="date"
-              value={date}
-              onChange={(e) => dispatch(setDate(e.target.value))}
-            />
-          </DetailItem>
-          <DetailItem>
-            <Label>항목:</Label>
-            <Input
-              type="text"
-              value={item}
-              onChange={(e) => dispatch(setItem(e.target.value))}
-            />
-          </DetailItem>
-          <DetailItem>
-            <Label>금액:</Label>
-            <Input
-              type="number"
-              value={amount}
-              onChange={(e) => dispatch(setAmount(e.target.value))}
-            />
-          </DetailItem>
-          <DetailItem>
-            <Label>내용:</Label>
-            <Input
-              type="text"
-              value={description}
-              onChange={(e) => dispatch(setDescription(e.target.value))}
-            />
-          </DetailItem>
-          <ButtonContainer>
-            <Button onClick={handleUpdate}>수정</Button>
-            <Button onClick={handleDelete}>삭제</Button>
-            <Button onClick={() => navigate("/")}>뒤로가기</Button>
-          </ButtonContainer>
-        </Detail>
-      ) : (
-        <NoData>
-          <div>데이터가 존재하지 않습니다</div>
-          <Button onClick={() => navigate("/")}>홈 화면으로 이동</Button>
-        </NoData>
-      )}
+      <Detail>
+        <DetailItem>
+          <Label>날짜:</Label>
+          <Input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </DetailItem>
+        <DetailItem>
+          <Label>항목:</Label>
+          <Input
+            type="text"
+            value={item}
+            onChange={(e) => setItem(e.target.value)}
+          />
+        </DetailItem>
+        <DetailItem>
+          <Label>금액:</Label>
+          <Input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </DetailItem>
+        <DetailItem>
+          <Label>내용:</Label>
+          <Input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </DetailItem>
+        <ButtonContainer>
+          <Button onClick={editExpense}>수정</Button>
+          <Button onClick={handleDelete}>삭제</Button>
+          <Button onClick={() => navigate("/")}>뒤로가기</Button>
+        </ButtonContainer>
+      </Detail>
     </Container>
   );
 };

@@ -40,8 +40,8 @@ export const getUserInfo = async () => {
     });
     return data;
   } catch (error) {
-    alert('AccessToken이 만료되었습니다. 다시 로그인해주세요.');
-    localStorage.clear();
+    alert(error?.response?.data?.message);
+    throw error;
   }
 }
 
@@ -51,10 +51,10 @@ export const updateProfile = async (formData) => {
     try {
       const { data } = await authApi.patch('/profile', formData, {
         headers: {
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${accessToken}`
         }
       });
-
       return data;
     } catch (error) {
       alert(error?.response?.data?.message);
