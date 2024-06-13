@@ -5,6 +5,7 @@ import NotFound from "../pages/NotFound";
 import Signin from "../pages/Signin";
 import SignUp from "../pages/SignUp";
 import { useSelector } from "react-redux";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 const PublicRoute = ({ element }) => {
   const isLogin = useSelector((state) => state.auth.isLogin);
@@ -23,6 +24,10 @@ const Router = () => {
       <Route
         path="/detail/:id"
         element={<PrivateRoute element={<DetailPage />} />}
+      />
+      <Route
+        path="/profile"
+        element={<PrivateRoute element={<ProfilePage />} />}
       />
       <Route
         path="/auth/signin"

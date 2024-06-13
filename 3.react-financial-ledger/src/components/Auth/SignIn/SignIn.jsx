@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -8,7 +8,7 @@ import {
   Button,
   ToggleButton,
 } from "./style";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../../../redux/slices/authSlice";
 import { signIn } from "../../../apis/auth";
 
@@ -17,32 +17,15 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (user.isLogin) {
-      console.log("로그인된 유저 정보:");
-      console.log("유저 ID:", user.userId);
-      console.log("닉네임:", user.nickname);
-      console.log("아바타:", user.avatar);
-      console.log("액세스 토큰:", user.accessToken);
-    }
-  }, [user]);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     const data = await signIn({ id, password });
     const { accessToken, avatar, nickname, userId, success } = data;
     if (success) {
-      alert("로그인 성공");
+      alert("로그인이 되었습니다. :)!");
       localStorage.setItem("accessToken", accessToken);
       dispatch(login({ accessToken, avatar, nickname, userId }));
-      console.log("로그인 상태 업데이트:", {
-        accessToken,
-        avatar,
-        nickname,
-        userId,
-      });
       navigate("/");
     }
   };
